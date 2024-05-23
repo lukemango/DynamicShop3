@@ -1,11 +1,10 @@
 package me.sat7.dynamicshop.utilities;
 
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-
 import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.constants.Constants;
 import me.sat7.dynamicshop.files.CustomConfig;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 
 public final class SoundUtil
 {

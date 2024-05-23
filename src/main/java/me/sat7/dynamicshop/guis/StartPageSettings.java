@@ -1,8 +1,7 @@
 package me.sat7.dynamicshop.guis;
 
-import java.util.UUID;
-
 import me.sat7.dynamicshop.DynaShopAPI;
+import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.events.OnChat;
 import me.sat7.dynamicshop.utilities.ShopUtil;
 import me.sat7.dynamicshop.utilities.UserUtil;
@@ -12,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
-import me.sat7.dynamicshop.DynamicShop;
+import java.util.UUID;
 
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 

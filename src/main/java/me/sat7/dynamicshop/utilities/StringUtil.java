@@ -1,6 +1,5 @@
 package me.sat7.dynamicshop.utilities;
 
-import me.sat7.dynamicshop.guis.ItemTrade;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;

@@ -1,13 +1,13 @@
 package me.sat7.dynamicshop.utilities;
 
-import java.util.ArrayList;
-
 import me.sat7.dynamicshop.files.CustomConfig;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
 
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 

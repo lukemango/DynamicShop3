@@ -1,10 +1,9 @@
 package me.sat7.dynamicshop.commands;
 
+import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.utilities.ConfigUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import me.sat7.dynamicshop.DynamicShop;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SET_TAX;

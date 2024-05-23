@@ -1,11 +1,10 @@
 package me.sat7.dynamicshop.commands;
 
+import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.utilities.ConfigUtil;
+import me.sat7.dynamicshop.utilities.ShopUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import me.sat7.dynamicshop.DynamicShop;
-import me.sat7.dynamicshop.utilities.ShopUtil;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SET_DEFAULT_SHOP;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;

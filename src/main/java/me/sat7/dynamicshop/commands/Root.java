@@ -3,7 +3,6 @@ package me.sat7.dynamicshop.commands;
 import me.sat7.dynamicshop.DynaShopAPI;
 import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.constants.Constants;
-
 import me.sat7.dynamicshop.utilities.UserUtil;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;

@@ -1,9 +1,8 @@
 package me.sat7.dynamicshop.models;
 
-import org.bukkit.inventory.ItemStack;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.inventory.ItemStack;
 
 @Getter
 @Setter

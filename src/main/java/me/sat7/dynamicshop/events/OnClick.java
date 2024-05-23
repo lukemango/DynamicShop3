@@ -4,7 +4,6 @@ import me.sat7.dynamicshop.DynaShopAPI;
 import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.guis.InGameUI;
 import me.sat7.dynamicshop.guis.UIManager;
-
 import me.sat7.dynamicshop.utilities.UserUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

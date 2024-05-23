@@ -1,12 +1,10 @@
 package me.sat7.dynamicshop.jobshook;
 
-import com.gamingmesh.jobs.container.JobsPlayer;
-import org.bukkit.entity.Player;
-
 import com.gamingmesh.jobs.Jobs;
+import com.gamingmesh.jobs.container.JobsPlayer;
 import com.gamingmesh.jobs.container.PlayerPoints;
-
 import me.sat7.dynamicshop.DynamicShop;
+import org.bukkit.entity.Player;
 
 import static me.sat7.dynamicshop.utilities.LangUtil.n;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;

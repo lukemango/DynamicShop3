@@ -2,7 +2,7 @@ package me.sat7.dynamicshop.commands.shop;
 
 import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.commands.DSCMD;
-import me.sat7.dynamicshop.utilities.*;
+import me.sat7.dynamicshop.utilities.ShopUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

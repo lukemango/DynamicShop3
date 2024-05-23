@@ -5,7 +5,6 @@ import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.constants.Constants;
 import me.sat7.dynamicshop.utilities.ItemsUtil;
 import me.sat7.dynamicshop.utilities.ShopUtil;
-
 import me.sat7.dynamicshop.utilities.StringUtil;
 import me.sat7.dynamicshop.utilities.UserUtil;
 import org.bukkit.ChatColor;
@@ -31,9 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static me.sat7.dynamicshop.constants.Constants.*;
+import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_CREATE_SIGN;
+import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_DESTROY_SIGN;
+import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
-import static org.bukkit.Material.*;
+import static org.bukkit.Material.getMaterial;
 
 public class OnSignClick implements Listener
 {

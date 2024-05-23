@@ -1,8 +1,8 @@
 package me.sat7.dynamicshop.utilities;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
+import me.sat7.dynamicshop.DynamicShop;
+import me.sat7.dynamicshop.commands.Help;
+import me.sat7.dynamicshop.constants.Constants;
 import me.sat7.dynamicshop.files.CustomConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,9 +13,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
-import me.sat7.dynamicshop.DynamicShop;
-import me.sat7.dynamicshop.commands.Help;
-import me.sat7.dynamicshop.constants.Constants;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static me.sat7.dynamicshop.constants.Constants.*;
 

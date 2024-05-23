@@ -1,15 +1,14 @@
 package me.sat7.dynamicshop.utilities;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.sat7.dynamicshop.DynamicShop;
+import me.sat7.dynamicshop.constants.Constants;
+import me.sat7.dynamicshop.files.CustomConfig;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-
-import me.sat7.dynamicshop.DynamicShop;
-import me.sat7.dynamicshop.constants.Constants;
-import me.sat7.dynamicshop.files.CustomConfig;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;

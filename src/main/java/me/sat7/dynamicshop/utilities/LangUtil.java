@@ -12,20 +12,19 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-public final class LangUtil
-{
+public final class LangUtil {
     public static CustomConfig ccLang = new CustomConfig();
 
-    private LangUtil()
-    {
+    private LangUtil() {
 
     }
 
-    public static void setupLangFile(String lang)
-    {
+    public static void setupLangFile(String lang) {
         // 한국어
         {
             ccLang.setup("Lang_V3_ko-KR", null);
@@ -931,22 +930,18 @@ public final class LangUtil
 
         if (lang == null) lang = "en-US";
 
-        if (!lang.equals("en-US") && !lang.equals("ko-KR"))
-        {
+        if (!lang.equals("en-US") && !lang.equals("ko-KR")) {
             ConfigurationSection conf = ccLang.get().getConfigurationSection("");
 
             ccLang.setup("Lang_V3_" + lang, null);
 
-            for (String s : conf.getKeys(true))
-            {
-                if (!ccLang.get().contains(s))
-                {
+            for (String s : conf.getKeys(true)) {
+                if (!ccLang.get().contains(s)) {
                     DynamicShop.console.sendMessage(Constants.DYNAMIC_SHOP_PREFIX + "String Key " + s + " added");
                     ccLang.get().addDefault(s, conf.get(s));
                 }
             }
-        } else
-        {
+        } else {
             ccLang.setup("Lang_V3_" + lang, null);
         }
 
@@ -958,131 +953,105 @@ public final class LangUtil
 
     public static final Pattern HEX_PATTERN = Pattern.compile("(#[A-Fa-f0-9]{6})");
 
-    public static String t(Player player, String key)
-    {
+    public static String t(Player player, String key) {
         return t(player, key, true);
     }
 
-    public static String t(CommandSender sender, String key)
-    {
+    public static String t(CommandSender sender, String key) {
         Player player = null;
-        if(sender instanceof Player)
+        if (sender instanceof Player)
             player = (Player) sender;
 
         return t(player, key, true);
     }
 
-    public static String t(Player player, String key, boolean hexConvert)
-    {
+    public static String t(Player player, String key, boolean hexConvert) {
         String temp = ccLang.get().getString(key);
-        if(temp == null || temp.isEmpty())
+        if (temp == null || temp.isEmpty())
             return key;
 
-        if (hexConvert && ConfigUtil.GetUseHexColorCode())
-        {
+        if (hexConvert && ConfigUtil.GetUseHexColorCode()) {
             Matcher matcher = HEX_PATTERN.matcher(temp);
-            while (matcher.find())
-            {
+            while (matcher.find()) {
                 temp = temp.replace(matcher.group(), String.valueOf(ChatColor.of(matcher.group())));
             }
         }
 
-        if(player != null && DynamicShop.isPapiExist && ConfigUtil.GetUsePlaceholderAPI())
+        if (player != null && DynamicShop.isPapiExist && ConfigUtil.GetUsePlaceholderAPI())
             return PlaceholderAPI.setPlaceholders(player, temp);
         else
             return temp;
     }
 
-    public static String TranslateHexColor(String message)
-    {
+    public static String TranslateHexColor(String message) {
         Matcher matcher = HEX_PATTERN.matcher(message);
-        while (matcher.find())
-        {
+        while (matcher.find()) {
             message = message.replace(matcher.group(), String.valueOf(ChatColor.of(matcher.group())));
         }
         return message;
     }
 
-    public static boolean sendMessageWithLocalizedItemName(Player player, String message, Material material) {
-        if (material != null) {
-            String matKey;
-            try {
-                matKey = DynamicShop.localeManager.queryMaterial(material, (short)0, null);
-            } catch (Exception var8) {
-                Bukkit.getLogger().severe("[LocaleLib] Unable to query Material: " + material.name());
-                return false;
+    public static void sendMessageWithLocalizedItemName(Player player, String message, Material material) {
+        if (material == null) return;
+
+        String materialName = Arrays.stream(material.name().split("_"))
+                        .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                        .collect(Collectors.joining(" "));
+
+        String[] splitByRegex = null;
+        if (ConfigUtil.GetUseHexColorCode())
+            splitByRegex = HEX_PATTERN.split(message);
+
+        if (splitByRegex != null && splitByRegex.length > 1) {
+            StringBuilder finalString;
+            if (splitByRegex[0].contains("<item>")) {
+                String[] splitByItem = splitByRegex[0].split("<item>");
+                finalString = new StringBuilder(("{\"text\":\"" + splitByItem[0] + "\"},"));
+                finalString.append("{\"translate\":\"").append(materialName).append("\"},");
+                finalString.append("{\"text\":\"").append(splitByItem[1]).append("\"},");
+            } else {
+                finalString = new StringBuilder("{\"text\":\"" + splitByRegex[0] + "\"},");
             }
 
-            String[] splitByRegex = null;
-            if(ConfigUtil.GetUseHexColorCode())
-                splitByRegex = HEX_PATTERN.split(message);
+            int idx = 0;
 
-            if(splitByRegex != null && splitByRegex.length > 1)
-            {
-                StringBuilder finalString;
-                if(splitByRegex[0].contains("<item>"))
-                {
-                    String[] splitByItem = splitByRegex[0].split("<item>");
-                    finalString = new StringBuilder(("{\"text\":\"" + splitByItem[0] + "\"},"));
-                    finalString.append("{\"translate\":\"").append(matKey).append("\"},");
-                    finalString.append("{\"text\":\"").append(splitByItem[1]).append("\"},");
-                }
-                else
-                {
-                    finalString = new StringBuilder("{\"text\":\"" + splitByRegex[0] + "\"},");
+            Matcher matcher = HEX_PATTERN.matcher(message);
+
+            while (matcher.find()) {
+                if (splitByRegex[idx + 1].contains("<item>")) {
+                    String[] splitByItem = splitByRegex[idx + 1].split("<item>");
+                    finalString.append("{\"text\":\"").append(splitByItem[0]).append("\", \"color\":\"").append(matcher.group()).append("\"},");
+                    finalString.append("{\"translate\":\"").append(materialName).append("\", \"color\":\"").append(matcher.group()).append("\"},");
+                    finalString.append("{\"text\":\"").append(splitByItem[1]).append("\", \"color\":\"").append(matcher.group()).append("\"}");
+                } else {
+                    finalString.append("{\"text\":\"").append(splitByRegex[idx + 1]).append("\", \"color\":\"").append(matcher.group()).append("\"}");
                 }
 
-                int idx = 0;
-
-                Matcher matcher = HEX_PATTERN.matcher(message);
-
-                while (matcher.find())
-                {
-                    if(splitByRegex[idx+1].contains("<item>"))
-                    {
-                        String[] splitByItem = splitByRegex[idx+1].split("<item>");
-                        finalString.append("{\"text\":\"").append(splitByItem[0]).append("\", \"color\":\"").append(matcher.group()).append("\"},");
-                        finalString.append("{\"translate\":\"").append(matKey).append("\", \"color\":\"").append(matcher.group()).append("\"},");
-                        finalString.append("{\"text\":\"").append(splitByItem[1]).append("\", \"color\":\"").append(matcher.group()).append("\"}");
-                    }
-                    else
-                    {
-                        finalString.append("{\"text\":\"").append(splitByRegex[idx + 1]).append("\", \"color\":\"").append(matcher.group()).append("\"}");
-                    }
-
-                    idx++;
-                    if(idx < splitByRegex.length - 1)
-                        finalString.append(",");
-                }
-
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + player.getName() + " [" + finalString + "]");
-            }
-            else
-            {
-                String replacement = "\",{\"translate\":\"" + matKey + "\"";
-
-                String text = message.split("<item>")[0];
-                if (text.contains("§")) {
-                    String colorCode = org.bukkit.ChatColor.getLastColors(text).replace("§", "");
-                    if (org.bukkit.ChatColor.getByChar(colorCode) != null) {
-                        String colorName = org.bukkit.ChatColor.getByChar(colorCode).name();
-                        replacement = replacement + ", \"color\":\"" + colorName.toLowerCase() + "\"";
-                    }
-                }
-                replacement = replacement + "},\"";
-
-                String msg = message.replace("<item>", replacement);
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + player.getName() + " [\"" + msg + "\"]");
+                idx++;
+                if (idx < splitByRegex.length - 1)
+                    finalString.append(",");
             }
 
-            return true;
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + player.getName() + " [" + finalString + "]");
         } else {
-            return false;
+            String replacement = "\",{\"translate\":\"" + materialName + "\"";
+
+            String text = message.split("<item>")[0];
+            if (text.contains("§")) {
+                String colorCode = org.bukkit.ChatColor.getLastColors(text).replace("§", "");
+                if (org.bukkit.ChatColor.getByChar(colorCode) != null) {
+                    String colorName = org.bukkit.ChatColor.getByChar(colorCode).name();
+                    replacement = replacement + ", \"color\":\"" + colorName.toLowerCase() + "\"";
+                }
+            }
+            replacement = replacement + "},\"";
+
+            String msg = message.replace("<item>", replacement);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + player.getName() + " [\"" + msg + "\"]");
         }
     }
 
-    private static void ReloadNumberFormat()
-    {
+    private static void ReloadNumberFormat() {
         intFormat = new DecimalFormat(ConfigUtil.GetIntFormat());
         doubleFormat = new DecimalFormat(ConfigUtil.GetDoubleFormat());
     }
@@ -1090,20 +1059,17 @@ public final class LangUtil
     private static DecimalFormat intFormat;
     private static DecimalFormat doubleFormat;
 
-    public static String n(int i)
-    {
+    public static String n(int i) {
         return intFormat.format(i);
     }
 
-    public static String n(double i)
-    {
+    public static String n(double i) {
         return doubleFormat.format(i);
     }
 
-    public static String n(double i, boolean toInt)
-    {
+    public static String n(double i, boolean toInt) {
         if (toInt)
-            return intFormat.format((int)i);
+            return intFormat.format((int) i);
         else
             return doubleFormat.format(i);
     }

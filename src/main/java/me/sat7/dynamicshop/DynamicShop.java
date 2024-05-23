@@ -1,7 +1,6 @@
 package me.sat7.dynamicshop;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import me.pikamug.localelib.LocaleManager;
 import me.sat7.dynamicshop.commands.CMDManager;
 import me.sat7.dynamicshop.commands.Optional;
 import me.sat7.dynamicshop.commands.Root;
@@ -101,7 +100,6 @@ public final class DynamicShop extends JavaPlugin implements Listener {
 
     public static UIManager uiManager;
 
-    public static final LocaleManager localeManager = new LocaleManager();
     public static boolean isPapiExist;
 
     public static boolean DEBUG_LOG_ENABLED = false;
